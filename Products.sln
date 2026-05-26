@@ -12,9 +12,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.Presentation", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.Services", "src\Products.Services\Products.Services.csproj", "{FCA5B730-62F4-452E-B0B0-E6D5DAC0142A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products", "src\ProductsA\Products.csproj", "{FEE627E1-9310-4E49-B6EF-3E34139D0821}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products", "src\Products\Products.csproj", "{FEE627E1-9310-4E49-B6EF-3E34139D0821}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{A4352B9E-5C0A-41C8-BC42-765B19BD55BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "src\Tests\Tests.csproj", "{A4352B9E-5C0A-41C8-BC42-765B19BD55BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -67,20 +67,9 @@ app.UseAuthorization();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoAPI v1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Products API v1");
 });
 
 app.MapControllers();
-// app.UseExceptionHandler(configure =>
-// {
-//     configure.Run(async context =>
-//     {
-//         // var problemDetailsService = context.RequestServices
-//         //     .GetRequiredService<IProblemDetailsService>();
-//         //
-//         // await problemDetailsService.TryWriteAsync(
-//         //     new ProblemDetailsContext { HttpContext = context });
-//     });
-// });
 
 app.Run();

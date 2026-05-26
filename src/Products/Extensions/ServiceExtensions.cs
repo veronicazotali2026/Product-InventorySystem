@@ -35,9 +35,9 @@ public static class ServiceExtensions
 			.AddRefitClient<IInventoryServiceClient>()
 			.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7061"))
 			.AddHttpMessageHandler<CorrelationIdDelegatingHandler>()
-			.AddResilienceHandler("MyResilienceStrategy", resilienceBuilder => // Adds resilience policy named "MyResilienceStrategy"
+			.AddResilienceHandler("SomeResilienceStrategy", resilienceBuilder => // Adds resilience policy named "MyResilienceStrategy"
 			{
-				// Retry Strategy configuration
+				// Retry Strategy configuration. This is very basic, but it's a-must when there are critical downstream services.
 				resilienceBuilder.AddRetry(new HttpRetryStrategyOptions // Configures retry behavior
 				{
 					MaxRetryAttempts = 2, // Maximum retries before throwing an exception (default: 3)

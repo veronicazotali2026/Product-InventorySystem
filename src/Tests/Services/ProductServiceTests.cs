@@ -3,6 +3,7 @@ using Entities.Models;
 using Entities.Responses;
 using Moq;
 using Products.Services;
+using Refit;
 using Serilog;
 using Shared.DataTransferObjects;
 using Shared.Extensions;
@@ -31,7 +32,7 @@ public class ProductServiceTests
     }
     
     [Fact]
-    public async Task GetProductIdAsync_Should_Return_EnrichedProductId_When_Product_Id_Is_Found()
+    public async Task GetProductIdAsync_Should_Return_EnrichedProductId_Without_PricingModel()
     {
         //ARRANGE
         var productId = Guid.NewGuid();

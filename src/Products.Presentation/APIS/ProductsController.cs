@@ -17,10 +17,10 @@ namespace Products.Presentation.APIS;
 public class ProductsController(IServiceManager service, ILogger logger) : ApiControllerBase
 {
 
-    [HttpGet("{id:guid}", Name = "ProductById")]
+    [HttpGet("{id:guid}", Name = "Get")]
     [ProducesResponseType(typeof(EnrichedProduct), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetProduct(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         logger.Information("Requesting Product: {ProductId}", id);
          var baseResult = await service.ProductService.GetProductIdAsync(id, new CancellationToken());
@@ -42,17 +42,8 @@ public class ProductsController(IServiceManager service, ILogger logger) : ApiCo
     {
         logger.Information("Creating Product: {ProductId}",cmd.Name);
         
-        try
-        {
-            var baseResult = await service.ProductService.SaveProductAsync(cmd, new CancellationToken());
-            var productResult = baseResult.GetResult<ProductResponse>();
-            return CreatedAtRoute("ProductById", new { id = productResult.Id }, productResult);
-        }
-        catch (Exception ex)
-        {
-            logger.Error(ex,
-                "Failed to create Product :{ProductName}",cmd.Name);
-            throw;
-        }
+        var baseResult = await service.ProductService.SaveProductAsync(cmd, new CancellationToken());
+        var productResult = baseResult.GetResult<ProductResponse>();
+        return CreatedAtRoute("Get", new { id = productResult.Id }, productResult);
     }
 }

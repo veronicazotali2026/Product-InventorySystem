@@ -12,6 +12,7 @@ public class ProductService(IRepositoryManager repository, IInventoryServiceClie
 {
     public async Task<ApiBaseResponse> SaveProductAsync(CreateProductCommand request, CancellationToken cancellationToken)
     {
+        // Could use Automapper or some library to handle mapping (It does not need to be Automapper!!).
         repository.Product.CreateProduct(new Product()
         {
             Description = request.Description,

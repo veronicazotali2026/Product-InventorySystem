@@ -1,6 +1,6 @@
 How to run the API
 -------------------
-- Please, in the solution's root directory, run the following:
+- Please, in the solution's root directory, run the following, to create and seed SQL DB:
 dotnet ef database update --project src\Repository\Repository.csproj --startup-project src\Products\Products.csproj
 - Run Products project. Then, visit http://localhost:5112/swagger/index.html
 - Things for consideration:

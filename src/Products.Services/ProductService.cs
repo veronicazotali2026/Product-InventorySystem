@@ -4,7 +4,6 @@ using Entities.Responses;
 using Serilog;
 using Shared.DataTransferObjects;
 using Shared.Response;
-using EnrichedProduct = Shared.DataTransferObjects.EnrichedProduct;
 
 namespace Products.Services;
 
@@ -13,17 +12,19 @@ public class ProductService(IRepositoryManager repository, IInventoryServiceClie
     public async Task<ApiBaseResponse> SaveProductAsync(CreateProductCommand request, CancellationToken cancellationToken)
     {
         // Could use Automapper or some library to handle mapping (It does not need to be Automapper!!).
-        repository.Product.CreateProduct(new Product()
+        var product = new Product()
         {
             Description = request.Description,
-            Name = request.Name,
-        });
+            Name = request.Name
+        };
+        
+        repository.Product.CreateProduct(product);
         
         await repository.SaveAsync();
         
         logger.Information($"DB: Saved product:{request.Name}.");
 
-        var productDto = new ProductResponse(Guid.Empty);
+        var productDto = new ProductResponse(product.Id);
 
         return new ApiOkResponse<ProductResponse>(productDto);
     }
@@ -44,29 +45,28 @@ public class ProductService(IRepositoryManager repository, IInventoryServiceClie
         {
             logger.Error($"Inventory service unavailable whilst trying to get information for product:{productId}");
             
-            return new ApiOkResponse<EnrichedProduct>(new EnrichedProduct()
+            return new ApiOkResponse<EnrichedProductWithMessage>(new EnrichedProductWithMessage
             {
                 Id = productId,
                 Description = product.Description,
-                Name = product.Name,
-                PriceDetails = new PriceDetailsFailure()
+                Name = product.Name
             });
         }
 
         logger.Information($"Successfully received information, from Inventory service for product:{productId}");
+
+        var pricingModel = inventoryResponse.product;
         
-        var enrichedProduct = new EnrichedProduct()
+        var enrichedProduct = new EnrichedProductWithPricing()
         {
             Id = productId,
             Description = product.Description,
             Name = product.Name,
-            PriceDetails = new PriceDetailsSuccess()
-            {
-                Price = inventoryResponse.product.Price
-            }
+            Price = pricingModel.Price,
+            Stock = pricingModel.Stock
         };
 
-        return new ApiOkResponse<EnrichedProduct>(enrichedProduct);
+        return new ApiOkResponse<EnrichedProductWithPricing>(enrichedProduct);
     }
 
      async Task<(InventoryProduct? product,bool result)> GetProductFromInventoryAsync(Guid productId)

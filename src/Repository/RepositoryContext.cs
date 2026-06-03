@@ -12,4 +12,4 @@ public class RepositoryContext(DbContextOptions options) : DbContext(options)
 	}
 
 	public DbSet<Product>? Products { get; init; }
-}
+} 

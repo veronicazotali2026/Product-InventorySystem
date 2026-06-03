@@ -22,7 +22,7 @@ public class ApiControllerBase : ControllerBase
                 Message = response.Message,
                 StatusCode = StatusCodes.Status400BadRequest
             }),
-            _ => throw new NotImplementedException()
+            _ => throw new Exception("Unable to process error.")
         };
     }
 }

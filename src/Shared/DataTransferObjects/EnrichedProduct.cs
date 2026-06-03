@@ -1,26 +1,19 @@
 namespace Shared.DataTransferObjects;
 
-public record EnrichedProduct
+public record BaseEnrichedProduct
 {
     public Guid Id { get; init; }
     public string? Name { get; init; }
     public string? Description { get; init; }
-
-    public PriceDetails PriceDetails { get; init; } = null!;
 }
 
-public abstract record PriceDetails 
-{
-    
-}
-
-public record PriceDetailsSuccess: PriceDetails
+public record EnrichedProductWithPricing: BaseEnrichedProduct
 {
     public decimal? Price { get; init; }
     public decimal? Stock { get; init; }
 }
 
-public record PriceDetailsFailure : PriceDetails
+public record EnrichedProductWithMessage : BaseEnrichedProduct
 {
-    public string Message => "Data Unavailable";
+    public string Message => "Data unavailable";
 }

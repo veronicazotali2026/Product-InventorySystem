@@ -24,8 +24,8 @@ internal sealed class CustomExceptionHandler(ILogger logger) : IExceptionHandler
         httpContext.Response.StatusCode = status;
 
         var problemDetails = new ProblemDetails
-        {
-           Status = status,
+        { 
+            Status = status,
             Title = "An error occurred",
             Type = exception.GetType().Name,
             Detail = exception.Message

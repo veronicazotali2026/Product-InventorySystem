@@ -1,13 +1,14 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Entities.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Products.Presentation.ActionFilters;
 using Products.Services;
 using Shared.DataTransferObjects;
 using Shared.Response;
-using EnrichedProduct = Shared.DataTransferObjects.EnrichedProduct;
+
 using Serilog;
 using Shared.Extensions;
 
@@ -18,19 +19,25 @@ public class ProductsController(IServiceManager service, ILogger logger) : ApiCo
 {
 
     [HttpGet("{id:guid}", Name = "Get")]
-    [ProducesResponseType(typeof(EnrichedProduct), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiBaseResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get(Guid id)
     {
-        logger.Information("Requesting Product: {ProductId}", id);
-         var baseResult = await service.ProductService.GetProductIdAsync(id, new CancellationToken());
-     
-        if (!baseResult.Success)
-            return ProcessError(baseResult);
-        
-        var enrichedProduct = baseResult.GetResult<EnrichedProduct>();
-    
-        return Ok(enrichedProduct);
+        try
+        {
+            logger.Information("Requesting Product: {ProductId}", id);
+            var baseResult = await service.ProductService.GetProductIdAsync(id, new CancellationToken());
+            
+            if (!baseResult.Success)
+                return ProcessError(baseResult);
+            
+            return Ok(baseResult);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     [HttpPost]

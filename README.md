@@ -11,3 +11,18 @@ dotnet ef database update --project src\Repository\Repository.csproj --startup-p
   4. CorrelationId and integration with serilog.
   5. Resilience strategy (No more Poly)
   6. Refit for Rest.
+
+Endpoints 
+-------------------
+- curl -X 'GET' \
+  'http://localhost:5112/api/products/83497793-a493-4cbe-d215-08dec169d256' \
+  -H 'accept: application/json'
+
+- curl -X 'POST' \
+  'http://localhost:5112/api/products' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Laptop",
+  "description": "Laptop XP"
+}'

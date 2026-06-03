@@ -73,6 +73,7 @@ public class ProductService(IRepositoryManager repository, IInventoryServiceClie
      {
          try
          {
+             //Very basic version. We should be checking for status codes as well, to cover more scenarios.
              var inventoryResponse = await inventoryServiceClient.GetProductAsync(productId);
 
              return inventoryResponse.IsSuccessful ? new ValueTuple<InventoryProduct, bool>(inventoryResponse.Content, true) : new ValueTuple<InventoryProduct?, bool>(null, false);

@@ -23,21 +23,13 @@ public class ProductsController(IServiceManager service, ILogger logger) : ApiCo
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get(Guid id)
     {
-        try
-        {
-            logger.Information("Requesting Product: {ProductId}", id);
-            var baseResult = await service.ProductService.GetProductIdAsync(id, new CancellationToken());
+        logger.Information("Requesting Product: {ProductId}", id);
+        var baseResult = await service.ProductService.GetProductIdAsync(id, CancellationToken.None);
             
-            if (!baseResult.Success)
-                return ProcessError(baseResult);
+        if (!baseResult.Success)
+            return ProcessError(baseResult);
             
-            return Ok(baseResult);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return Ok(baseResult);
     }
 
     [HttpPost]
@@ -49,7 +41,7 @@ public class ProductsController(IServiceManager service, ILogger logger) : ApiCo
     {
         logger.Information("Creating Product: {ProductId}",cmd.Name);
         
-        var baseResult = await service.ProductService.SaveProductAsync(cmd, new CancellationToken());
+        var baseResult = await service.ProductService.SaveProductAsync(cmd, CancellationToken.None);
         var productResult = baseResult.GetResult<ProductResponse>();
         return CreatedAtRoute("Get", new { id = productResult.Id }, productResult);
     }

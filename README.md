@@ -1,5 +1,7 @@
 How to run the API
 -------------------
+- Please, in the solution's root directory, run the following:
+dotnet ef database update --project src\Repository\Repository.csproj --startup-project src\Products\Products.csproj
 - Run Products project. Then, visit http://localhost:5112/swagger/index.html
 - Things for consideration:
   1. Onion Architecture. Repository interfaces, have been seperated from implementation. This would allow to switch to any DB layers without breaking contracts.
